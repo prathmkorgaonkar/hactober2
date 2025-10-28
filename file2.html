@@ -1,1 +1,339 @@
-<h1> Hi Hactober2 </h1>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign In — MyApp</title>
+
+  <style>
+    /* Simple modern responsive styling (mobile-first) */
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --accent:#2563eb;
+      --muted:#6b7280;
+      --radius:12px;
+      --shadow: 0 6px 20px rgba(38, 45, 65, 0.08);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg, #eef2ff 0%, var(--bg) 100%);
+      color:#111827;
+      padding:32px;
+    }
+
+    .container{
+      width:100%;
+      max-width:960px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:24px;
+      align-items:center;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:28px;
+    }
+
+    /* two-column layout on larger screens */
+    @media(min-width:880px){
+      .container{
+        grid-template-columns: 1fr 420px;
+        align-items:stretch;
+      }
+      .hero{
+        padding:36px 48px;
+      }
+      .card{
+        padding:36px;
+      }
+    }
+
+    .hero h1{
+      margin:0 0 8px 0;
+      font-size:28px;
+      line-height:1.05;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      margin-bottom:6px;
+      color:#374151;
+    }
+
+    input[type="email"],
+    input[type="password"]{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #e6e9ef;
+      font-size:15px;
+      outline:none;
+      transition:box-shadow .12s, border-color .12s;
+      background: #fbfdff;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus{
+      border-color: rgba(37,99,235,0.9);
+      box-shadow: 0 6px 18px rgba(37,99,235,0.08);
+    }
+
+    .row {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .checkbox {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    button[type="submit"]{
+      appearance:none;
+      border:0;
+      padding:12px 14px;
+      border-radius:10px;
+      background:var(--accent);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      font-size:15px;
+    }
+    button[type="submit"]:hover{ filter:brightness(.95) }
+    .alt {
+      background:transparent;
+      color:var(--accent);
+      text-decoration:underline;
+      font-size:14px;
+      border:0;
+      cursor:pointer;
+    }
+
+    .foot {
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:12px;
+    }
+
+    .input-group{
+      position:relative;
+    }
+    .toggle-pw{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+      background:transparent;
+      border:0;
+      cursor:pointer;
+      color:var(--muted);
+      font-size:13px;
+      padding:6px;
+    }
+
+    .error {
+      color:#b91c1c;
+      font-size:13px;
+    }
+
+    /* small helper */
+    .small { font-size:13px; color:var(--muted) }
+  </style>
+</head>
+<body>
+  <main class="container" role="main">
+    <!-- Left: Hero / Info -->
+    <section class="hero card" aria-labelledby="login-title">
+      <h1 id="login-title">Welcome back 👋</h1>
+      <p>Sign in to continue to <strong>MyApp</strong>. Enter your credentials below.</p>
+
+      <div style="height:18px"></div>
+
+      <ul style="margin:0;padding-left:18px;color:var(--muted)" class="small">
+        <li>Secure sign-in with server-side authentication</li>
+        <li>Remember me option for trusted devices</li>
+        <li>Support for password visibility toggle</li>
+      </ul>
+
+      <div class="foot" style="margin-top:22px">
+        Don't have an account?
+        <a href="#" class="alt" aria-label="Sign up">Create one</a>
+      </div>
+    </section>
+
+    <!-- Right: Login form -->
+    <section class="card" aria-labelledby="signin">
+      <h2 id="signin" style="margin:0 0 6px 0;font-size:20px">Sign in</h2>
+      <p class="small" style="margin:0 0 18px 0">Use your email and password to sign in.</p>
+
+      <!-- Replace action="/login" with your backend endpoint and method (POST) -->
+      <form id="loginForm" action="#" method="post" novalidate>
+        <div>
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" autocomplete="email" required
+                 placeholder="you@example.com" aria-describedby="emailHelp">
+          <div id="emailHelp" class="small" style="margin-top:6px">We'll never share your email.</div>
+          <div id="emailError" class="error" aria-live="polite" hidden></div>
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <div class="input-group">
+            <input id="password" name="password" type="password" autocomplete="current-password" required
+                   placeholder="Enter your password" aria-describedby="pwHelp">
+            <button type="button" class="toggle-pw" id="togglePw" aria-label="Show password">Show</button>
+          </div>
+          <div id="pwHelp" class="small" style="margin-top:6px">Minimum 6 characters recommended.</div>
+          <div id="pwError" class="error" aria-live="polite" hidden></div>
+        </div>
+
+        <div class="row" style="margin-top:4px">
+          <label class="checkbox">
+            <input type="checkbox" id="remember" name="remember" value="1">
+            <span>Remember me</span>
+          </label>
+
+          <a class="small" href="#" aria-label="Forgot password">Forgot password?</a>
+        </div>
+
+        <div style="margin-top:6px">
+          <button type="submit">Sign in</button>
+        </div>
+
+        <div style="margin-top:12px" class="small" aria-hidden="true">
+          Or sign in with
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:8px">
+          <button type="button" class="alt" aria-label="Sign in with Google">Google</button>
+          <button type="button" class="alt" aria-label="Sign in with GitHub">GitHub</button>
+        </div>
+
+        <div id="submitMsg" class="small" style="margin-top:10px; color:var(--muted)"></div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Client-side enhancements: validation, show/hide password
+    (function () {
+      const form = document.getElementById('loginForm');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const toggle = document.getElementById('togglePw');
+      const emailError = document.getElementById('emailError');
+      const pwError = document.getElementById('pwError');
+      const submitMsg = document.getElementById('submitMsg');
+
+      // Toggle password visibility
+      toggle.addEventListener('click', () => {
+        if (password.type === 'password') {
+          password.type = 'text';
+          toggle.textContent = 'Hide';
+          toggle.setAttribute('aria-pressed', 'true');
+        } else {
+          password.type = 'password';
+          toggle.textContent = 'Show';
+          toggle.setAttribute('aria-pressed', 'false');
+        }
+      });
+
+      // Simple validators
+      function validateEmail() {
+        const value = email.value.trim();
+        // basic RFC-like email check (not exhaustive)
+        const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        if (value === '') {
+          emailError.textContent = 'Email is required.';
+          emailError.hidden = false;
+          return false;
+        } else if (!ok) {
+          emailError.textContent = 'Enter a valid email address.';
+          emailError.hidden = false;
+          return false;
+        }
+        emailError.hidden = true;
+        return true;
+      }
+
+      function validatePassword() {
+        const val = password.value;
+        if (val.length === 0) {
+          pwError.textContent = 'Password is required.';
+          pwError.hidden = false;
+          return false;
+        } else if (val.length < 4) {
+          pwError.textContent = 'Password is too short.';
+          pwError.hidden = false;
+          return false;
+        }
+        pwError.hidden = true;
+        return true;
+      }
+
+      // Real-time validation (optional)
+      email.addEventListener('input', validateEmail);
+      password.addEventListener('input', validatePassword);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); // prevent actual submit for demo (remove in production)
+        const okEmail = validateEmail();
+        const okPw = validatePassword();
+
+        if (!okEmail || !okPw) {
+          submitMsg.textContent = 'Please fix the errors above.';
+          return;
+        }
+
+        // Example: prepare payload to send to server (uncomment and implement fetch)
+        const payload = {
+          email: email.value.trim(),
+          password: password.value,
+          remember: document.getElementById('remember').checked ? 1 : 0
+        };
+
+        // For real usage: send POST to your backend endpoint:
+        // fetch('/auth/login', {
+        //   method: 'POST',
+        //   headers: {'Content-Type':'application/json'},
+        //   body: JSON.stringify(payload)
+        // }).then(...)
+
+        // Temporary success message (remove when wiring backend)
+        submitMsg.style.color = 'green';
+        submitMsg.textContent = 'Validated — sending credentials to server... (demo)';
+        // For demo, reset password field:
+        password.value = '';
+      });
+    })();
+  </script>
+</body>
+</html>
